@@ -9,7 +9,7 @@ import io.gatling.javaapi.http.*;
 public class AceToysSimulation extends Simulation {
 
   private static final String DOMAIN = "acetoys.uk";
-  private static final String TEST_TYPE = System.getProperty("TEST_TYPE", "INSTANT_USERS");
+  private static final String TEST_TYPE = System.getProperty("TEST_TYPE", "CLOSED_MODEL_INJECTION");
 
   // HTTP Config
   private HttpProtocolBuilder httpProtocol =

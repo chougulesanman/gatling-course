@@ -23,12 +23,11 @@ public class Authentication {
           .exec(session -> session.set("customerLoggedIn", true));
 
   public static ChainBuilder logoutUser =
-      randomSwitch()
-          .on(
-              percent(10.0)
-                  .then(
-                      http("14_UserLogout")
-                          .post("/logout")
-                          .formParam("_csrf", "#{csrfTokenLogIn}")
-                          .check(css("a#NavbarHeaderLink[href='/login']").is("Login"))));
+      doIf(session -> Math.random() < 0.1)
+          .then(
+              exec(
+                  http("14_UserLogout")
+                      .post("/logout")
+                      .formParam("_csrf", "#{csrfTokenLogIn}")
+                      .check(css("a#NavbarHeaderLink[href='/login']").is("Login"))));
 }
