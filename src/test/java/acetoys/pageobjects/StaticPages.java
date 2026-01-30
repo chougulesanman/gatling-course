@@ -3,26 +3,34 @@ package acetoys.pageobjects;
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
 
-import io.gatling.javaapi.core.*;
+import acetoys.utils.Headers;
+import io.gatling.javaapi.core.ChainBuilder;
 
 public class StaticPages {
-  public static ChainBuilder homePage =
+
+  public static final ChainBuilder homePage =
       exec(
           http("01_NavigateToHomePage")
               .get("/")
+              .headers(Headers.DEFAULT_HTML_HEADERS)
               .check(substring("<title>Ace Toys Online Shop</title>"))
               .check(css("meta[name='_csrf']", "content").saveAs("csrfToken"))
-              .check(status().is(200)));
+              .check(status().is(200))
+      );
 
-  public static ChainBuilder ourStoryPage =
+  public static final ChainBuilder ourStoryPage =
       exec(
           http("02_NavigateToOurStoryPage")
               .get("/our-story")
-              .check(regex("was founded online in \\d{4}")));
+              .headers(Headers.DEFAULT_HTML_HEADERS)
+              .check(regex("was founded online in \\d{4}"))
+      );
 
-  public static ChainBuilder getInTouchPage =
+  public static final ChainBuilder getInTouchPage =
       exec(
           http("03_NavigateToGetInTouchPage")
               .get("/get-in-touch")
-              .check(substring("as we are not actually a real store!")));
+              .headers(Headers.DEFAULT_HTML_HEADERS)
+              .check(substring("as we are not actually a real store!"))
+      );
 }

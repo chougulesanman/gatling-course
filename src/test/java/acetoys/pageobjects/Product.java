@@ -5,47 +5,33 @@ import static acetoys.session.UserSession.incrementSessionBasketTotal;
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
 
-import io.gatling.javaapi.core.*;
+import acetoys.utils.DataFiles;
+import acetoys.utils.Headers;
+import io.gatling.javaapi.core.ChainBuilder;
+import io.gatling.javaapi.core.FeederBuilder;
 
 public class Product {
 
   private static final FeederBuilder<Object> productFeeder =
-      jsonFile("dataFiles/productDetails.json").random();
+      jsonFile(DataFiles.productDetailsJson()).random();
 
-  public static ChainBuilder productDetailsPage =
+  public static final ChainBuilder productDetailsPage =
       feed(productFeeder)
           .exec(
               http("07_NavigateToProductDetailsPage")
                   .get("/product/#{slug}")
-                  .check(css("#ProductDescription").isEL("#{description}")));
+                  .headers(Headers.DEFAULT_HTML_HEADERS)
+                  .check(css("#ProductDescription").isEL("#{description}"))
+          );
 
-  public static ChainBuilder addProductToCart =
+  public static final ChainBuilder addProductToCart =
       exec(incrementItemsInBasket)
           .exec(
               http("08_AddProductToCart")
                   .get("/cart/add/#{id}")
-                  //   .check(bodyString().saveAs("responseBody"))
+                  .headers(Headers.DEFAULT_HTML_HEADERS)
                   .check(
-                      substring("You have <span>#{itemsInBasket}</span> products in your Basket")))
+                      substring("You have <span>#{itemsInBasket}</span> products in your Basket"))
+          )
           .exec(incrementSessionBasketTotal);
-  //   .exec(
-  //       session -> {
-  //         System.out.println(">>> Response Body for 08_AddProductToCart: " +
-  // session.getString("responseBody"));
-  //         return session;
-  //       });
-
-  // public static ChainBuilder addProductToCart1 =
-  //     exec(
-  //         http("10_AddProductToCart")
-  //             .get("/cart/add/#{id}")
-  //             //   .check(bodyString().saveAs("responseBody"))
-  //             .check(substring("You have <span>2</span> products in your Basket")));
-  //   .exec(
-  //       session -> {
-  //         System.out.println(
-  //             ">>> Response Body for 10_AddProductToCart: "
-  //                 + session.getString("responseBody"));
-  //         return session;
-  //       });
 }
