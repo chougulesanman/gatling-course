@@ -16,24 +16,28 @@ public class UserJourney {
   private static final Duration MAX_PAUSE = Duration.ofMillis(5000);
 
   public static ChainBuilder browseStoreGuestUser =
-      exec(initSession)
-          .pause(MIN_PAUSE)
-          .exec(StaticPages.homePage)
-          .pause(MIN_PAUSE, MAX_PAUSE)
-          .exec(StaticPages.ourStoryPage)
-          .pause(MIN_PAUSE, MAX_PAUSE)
-          .exec(StaticPages.getInTouchPage)
-          .pause(MAX_PAUSE)
-          .repeat(3)
-          .on(
-              exec(Category.categoryPage)
-                  .pause(MIN_PAUSE, MAX_PAUSE)
-                  .exec(Category.cyclePagesOfProducts)
-                  .pause(MIN_PAUSE, MAX_PAUSE)
-                  .exec(Product.productDetailsPage)
-                  .pause(MIN_PAUSE, MAX_PAUSE));
+    group("browseStoreGuestUser")
+    .on(
+        exec(initSession)
+        .pause(MIN_PAUSE)
+        .exec(StaticPages.homePage)
+        .pause(MIN_PAUSE, MAX_PAUSE)
+        .exec(StaticPages.ourStoryPage)
+        .pause(MIN_PAUSE, MAX_PAUSE)
+        .exec(StaticPages.getInTouchPage)
+        .pause(MAX_PAUSE)
+        .repeat(3)
+        .on(
+            exec(Category.categoryPage)
+            .pause(MIN_PAUSE, MAX_PAUSE)
+            .exec(Category.cyclePagesOfProducts)
+            .pause(MIN_PAUSE, MAX_PAUSE)
+            .exec(Product.productDetailsPage)
+            .pause(MIN_PAUSE, MAX_PAUSE)));
 
   public static ChainBuilder leaveBasketGuestUser =
+    group("leaveBasketGuestUser")
+    .on(
       exec(initSession)
           .pause(MIN_PAUSE)
           .exec(StaticPages.homePage)
@@ -43,10 +47,12 @@ public class UserJourney {
           .exec(Product.productDetailsPage)
           .pause(MIN_PAUSE, MAX_PAUSE)
           .exec(Product.addProductToCart)
-          .pause(MIN_PAUSE, MAX_PAUSE);
+          .pause(MIN_PAUSE, MAX_PAUSE));
 
   public static ChainBuilder completePurchase =
-      exec(initSession)
+    group("completePurchase")
+    .on(
+        exec(initSession)
           .pause(MIN_PAUSE)
           .exec(StaticPages.homePage)
           .pause(MIN_PAUSE, MAX_PAUSE)
@@ -62,5 +68,5 @@ public class UserJourney {
           .pause(MIN_PAUSE, MAX_PAUSE)
           .exec(Cart.checkoutPage)
           .pause(MIN_PAUSE, MAX_PAUSE)
-          .exec(Authentication.logoutUser);
+          .exec(Authentication.logoutUser));
 }

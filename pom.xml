@@ -14,11 +14,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <gatling.version>3.9.5</gatling.version>
-    <gatling-maven-plugin.version>4.9.6</gatling-maven-plugin.version>
+    <gatling-maven-plugin.version>4.20.16</gatling-maven-plugin.version>
   </properties>
 
   <dependencies>
-    <!-- Gatling Java DSL + Highcharts -->
     <dependency>
       <groupId>io.gatling.highcharts</groupId>
       <artifactId>gatling-charts-highcharts</artifactId>
