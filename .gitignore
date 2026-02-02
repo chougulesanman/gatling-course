@@ -2,3 +2,4 @@
 /.mvn/wrapper/*.jar
 /.idea
 /.vscode
+/test-logs
