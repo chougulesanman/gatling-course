@@ -1,4 +1,4 @@
-package acetoys.utils;
+package common.utils;
 
 public final class DataFiles {
 
@@ -14,5 +14,9 @@ public final class DataFiles {
 
   public static String productDetailsJson() {
     return System.getProperty("PRODUCT_DETAILS_FILE", "dataFiles/productDetails.json");
+  }
+
+  public static String usersCsv() {
+    return System.getProperty("USERS_CSV_FILE", "dataFiles/users.csv");
   }
 }

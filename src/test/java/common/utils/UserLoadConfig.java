@@ -1,4 +1,4 @@
-package acetoys.utils;
+package common.utils;
 
 import java.time.Duration;
 
@@ -28,9 +28,9 @@ public final class UserLoadConfig {
   public static Duration maxPause() {
     long millis = Long.getLong("MAX_PAUSE_MS", 5000L);
     return Duration.ofMillis(millis);
-  }
+    }
 
-  // Test type selector (for Simulation)
+  // Test type selector (for AceToys)
   public static String testType() {
     return System.getProperty("TEST_TYPE", "CLOSED_MODEL_INJECTION");
   }

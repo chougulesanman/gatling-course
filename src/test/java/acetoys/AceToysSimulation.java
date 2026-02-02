@@ -3,9 +3,9 @@ package acetoys;
 import static io.gatling.javaapi.core.CoreDsl.global;
 
 import acetoys.simulation.TestPopulation;
-import acetoys.utils.EnvironmentConfig;
-import acetoys.utils.HttpProtocolFactory;
-import acetoys.utils.UserLoadConfig;
+import common.utils.EnvironmentConfig;
+import common.utils.HttpProtocolFactory;
+import common.utils.UserLoadConfig;
 import io.gatling.javaapi.core.Simulation;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
 
@@ -13,7 +13,7 @@ public class AceToysSimulation extends Simulation {
 
   private static final String TEST_TYPE = UserLoadConfig.testType();
 
-  private final HttpProtocolBuilder httpProtocol = HttpProtocolFactory.defaultHttpProtocol();
+  private final HttpProtocolBuilder httpProtocol = HttpProtocolFactory.defaultHtmlProtocol();
 
   {
     System.out.println("Running AceToysSimulation");

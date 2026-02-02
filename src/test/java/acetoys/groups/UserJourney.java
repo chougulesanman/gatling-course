@@ -8,7 +8,7 @@ import acetoys.pageobjects.Cart;
 import acetoys.pageobjects.Category;
 import acetoys.pageobjects.Product;
 import acetoys.pageobjects.StaticPages;
-import acetoys.utils.UserLoadConfig;
+import common.utils.UserLoadConfig;
 import io.gatling.javaapi.core.ChainBuilder;
 
 import java.time.Duration;

@@ -3,7 +3,7 @@ package acetoys.pageobjects;
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
 
-import acetoys.utils.Headers;
+import common.utils.Headers;
 import io.gatling.javaapi.core.ChainBuilder;
 
 public class StaticPages {

@@ -3,12 +3,13 @@ package acetoys.pageobjects;
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
 
-import acetoys.utils.DataFiles;
-import acetoys.utils.Headers;
 import io.gatling.javaapi.core.ChainBuilder;
 import io.gatling.javaapi.core.FeederBuilder;
 
 import java.util.Map;
+
+import common.utils.DataFiles;
+import common.utils.Headers;
 
 public class Category {
 

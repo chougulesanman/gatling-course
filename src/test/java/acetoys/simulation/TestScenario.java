@@ -3,7 +3,7 @@ package acetoys.simulation;
 import static io.gatling.javaapi.core.CoreDsl.*;
 
 import acetoys.groups.UserJourney;
-import acetoys.utils.UserLoadConfig;
+import common.utils.UserLoadConfig;
 import io.gatling.javaapi.core.ScenarioBuilder;
 
 import java.time.Duration;

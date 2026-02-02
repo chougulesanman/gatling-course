@@ -1,4 +1,4 @@
-package acetoys.utils;
+package common.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
