@@ -1,34 +1,58 @@
-## Running the AceToys Gatling tests
+# Gatling API Tutorial 🚀
 
-The project is designed to be **production-ready** and configurable via system properties.
+A simple, production-ready Gatling example project with both **API** and **Web** simulations. It shows how to structure Gatling tests, configure environments, and run load tests using the Maven wrapper (`./mvnw`).
 
-### Environments
+---
 
-Environment is selected with the `env` system property and resolved via `env-<env>.properties` in `src/test/resources/config`:
+## Quick Start ✅
 
-- `env-local.properties` → `env=local`
+Prerequisites:
+- Java 17 installed
+- No need to install Maven globally — use the included wrapper (`./mvnw`)
 
-Each file defines at least:
-
-```properties
-baseUrl=https://...
-requestTimeoutMs=5000
-```
-
-### SLA / assertions overrides
-
-Global assertions are configurable via system properties (see `UserLoadConfig`):
-
-- `ASSERT_P95_MS` (default: `1000`)
-- `ASSERT_P99_MS` (default: `2000`)
-- `ASSERT_FAILED_PERCENT_MAX` (default: `1.0`)
-
-**Example:**
+Run the API simulations (example):
 
 ```bash
-mvn gatling:test \
-  -Denv=local \
-  -DTEST_TYPE=CLOSED_MODEL_INJECTION \
-  -DASSERT_P95_MS=800 \
-  -DASSERT_P99_MS=1500 \
-  -DASSERT_FAILED_PERCENT_MAX=0.5
+./mvnw clean gatling:test -Denv=demo
+```
+
+Run the Web simulations (example):
+
+```bash
+./mvnw clean gatling:test -Denv=local -DWEB_TEST_TYPE=CLOSED_MODEL_INJECTION
+```
+
+Reports are generated in `target/gatling` after the run.
+
+---
+
+## Project Overview 🔧
+
+- `src/test/java/io/performance/demo/api` — API simulations, requests, and scenarios
+- `src/test/java/io/performance/demo/web` — Web simulations, page objects, and journeys
+- `src/test/java/io/performance/demo/common` — shared config and helpers (env, headers, protocols)
+- `src/test/resources/config` — environment property files (`env-local.properties`, `env-demo.properties`, ...)
+- `src/test/resources/dataFiles` — example data and JSON payloads used by tests
+
+This layout keeps examples small and easy to extend.
+
+---
+
+## Configuration & SLAs 🛠️
+
+Select the environment with the `env` system property (matches `env-<env>.properties`):
+
+```bash
+-Denv=local
+```
+
+Override SLA/assertion values with system properties:
+- `SLA_P95_MS` (default: `1000`)
+- `SLA_P99_MS` (default: `2000`)
+- `SLA_FAILED_PERCENT_MAX` (default: `1.0`)
+
+Example:
+
+```bash
+./mvnw clean gatling:test -Denv=local -DSLA_P95_MS=800 -DSLA_P99_MS=1500 -DSLA_FAILED_PERCENT_MAX=0.5
+```
