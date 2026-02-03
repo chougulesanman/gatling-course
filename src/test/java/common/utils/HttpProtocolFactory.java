@@ -12,15 +12,15 @@ public final class HttpProtocolFactory {
     return http
       .baseUrl(EnvironmentConfig.baseUrl())
       .headers(Headers.DEFAULT_HTML_HEADERS)
-      .acceptEncodingHeader("gzip, deflate")
-      .userAgentHeader("AceToys-Gatling-Demo");
+      .header(Headers.ACCEPT_ENCODING, Headers.GZIP_DEFLATE)
+      .userAgentHeader(Headers.ACETOYS_USER_AGENT);
   }
 
   public static HttpProtocolBuilder defaultJsonProtocol() {
     return http
       .baseUrl(EnvironmentConfig.baseUrl())
       .headers(Headers.DEFAULT_JSON_HEADERS)
-      .acceptEncodingHeader("gzip, deflate")
-      .userAgentHeader("Gatling-API-Performance-Test");
+      .header(Headers.ACCEPT_ENCODING, Headers.GZIP_DEFLATE)
+      .userAgentHeader(Headers.API_USER_AGENT);
   }
 }
