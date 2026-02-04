@@ -26,13 +26,14 @@ public class ApiUserSimulation extends Simulation {
     System.out.println("╚════════════════════════════════════════════════════════════╝\n");
 
     int userCount = LoadProfileConfig.userCount();
+    int loadFromUserCount = LoadProfileConfig.fromUserCount();
     int rampSeconds = LoadProfileConfig.rampDurationSeconds();
     int testDuration = LoadProfileConfig.testDurationSeconds();
 
     setUp(
         ApiScenario.buildUserScenario()
             .injectClosed(
-                rampConcurrentUsers(1).to(userCount).during(rampSeconds),
+                rampConcurrentUsers(loadFromUserCount).to(userCount).during(rampSeconds),
                 constantConcurrentUsers(userCount).during(testDuration),
                 rampConcurrentUsers(userCount).to(0).during(rampSeconds)
             )
@@ -45,16 +46,16 @@ public class ApiUserSimulation extends Simulation {
             global().failedRequests().percent().lt(LoadProfileConfig.failedRequestsPercentMax()),
 
             // API-specific checks
-            global().responseTime().max().lt(5000),
-            global().responseTime().mean().lt(2000),
-            global().successfulRequests().percent().gt(95.0),
-            global().requestsPerSec().gt(1.0),
+            global().responseTime().max().lt(LoadProfileConfig.responseTimeMaxMs()),
+            global().responseTime().mean().lt(LoadProfileConfig.responseTimeMeanMs()),
+            global().successfulRequests().percent().gt(LoadProfileConfig.successfulRequestsPercentMin()),
+            global().requestsPerSec().gt(LoadProfileConfig.requestsPerSecMin()),
 
-            forAll().responseTime().max().lt(10000),
+            forAll().responseTime().max().lt(LoadProfileConfig.forAllResponseTimeMaxMs()),
 
-            details("Read Operations").responseTime().mean().lt(2000),
-            details("Write Operations").responseTime().mean().lt(3000),
-            details("Product Operations").responseTime().mean().lt(2500)
+            details("Read Operations").responseTime().mean().lt(LoadProfileConfig.readOpsResponseTimeMeanMs()),
+            details("Write Operations").responseTime().mean().lt(LoadProfileConfig.writeOpsResponseTimeMeanMs()),
+            details("Product Operations").responseTime().mean().lt(LoadProfileConfig.productOpsResponseTimeMeanMs())
         );
 
     ApiTestLogger.info("Assertions configured successfully");

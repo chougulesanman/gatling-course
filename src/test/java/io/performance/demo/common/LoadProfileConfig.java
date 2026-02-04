@@ -7,12 +7,20 @@ public final class LoadProfileConfig {
   private LoadProfileConfig() {}
 
   // Load profile
+  public static int fromUserCount() {
+    return Integer.getInteger("LOAD_FROM_USER_COUNT", 10);
+  }
+
   public static int userCount() {
-    return Integer.getInteger("LOAD_USER_COUNT", 10);
+    return Integer.getInteger("LOAD_USER_COUNT", 20);
+  }
+  
+  public static int donothingFor() {
+    return Integer.getInteger("DO_NOTHING_FOR_DURATION_SECONDS", 5);
   }
 
   public static int rampDurationSeconds() {
-    return Integer.getInteger("LOAD_RAMP_DURATION_SECONDS", 30);
+    return Integer.getInteger("LOAD_RAMP_DURATION_SECONDS", 40);
   }
 
   public static int testDurationSeconds() {
@@ -47,4 +55,38 @@ public final class LoadProfileConfig {
   public static double failedRequestsPercentMax() {
     return Double.parseDouble(System.getProperty("SLA_FAILED_PERCENT_MAX", "1.0"));
   }
+
+  // API specific thresholds
+  public static int responseTimeMaxMs() {
+    return Integer.getInteger("SLA_RESPONSE_TIME_MAX_MS", 5000);
+  }
+
+  public static int responseTimeMeanMs() {
+    return Integer.getInteger("SLA_RESPONSE_TIME_MEAN_MS", 2000);
+  }
+
+  public static double successfulRequestsPercentMin() {
+    return Double.parseDouble(System.getProperty("SLA_SUCCESSFUL_REQUESTS_PERCENT_MIN", "95.0"));
+  }
+
+  public static double requestsPerSecMin() {
+    return Double.parseDouble(System.getProperty("SLA_REQUESTS_PER_SEC_MIN", "1.0"));
+  }
+
+  public static int forAllResponseTimeMaxMs() {
+    return Integer.getInteger("SLA_FOR_ALL_RESPONSE_TIME_MAX_MS", 10000);
+  }
+
+  public static int readOpsResponseTimeMeanMs() {
+    return Integer.getInteger("SLA_READ_OPERATIONS_RESPONSE_TIME_MEAN_MS", 2000);
+  }
+
+  public static int writeOpsResponseTimeMeanMs() {
+    return Integer.getInteger("SLA_WRITE_OPERATIONS_RESPONSE_TIME_MEAN_MS", 3000);
+  }
+
+  public static int productOpsResponseTimeMeanMs() {
+    return Integer.getInteger("SLA_PRODUCT_OPERATIONS_RESPONSE_TIME_MEAN_MS", 2500);
+  }
+
 }

@@ -10,31 +10,34 @@ import java.time.Duration;
 public class WebLoadProfiles {
 
   private static final int LOAD_USER_COUNT = LoadProfileConfig.userCount();
+  private static final int LOAD_FROM_USER_COUNT = LoadProfileConfig.fromUserCount();
+  private static final Duration DO_NOTHING_FOR_DURATION_SECONDS =
+      Duration.ofSeconds(LoadProfileConfig.donothingFor());
   private static final Duration LOAD_RAMP_DURATION_SECONDS =
       Duration.ofSeconds(LoadProfileConfig.rampDurationSeconds());
 
   public static final PopulationBuilder instantUsers =
       WebScenario.defaultLoadTest.injectOpen(
-          nothingFor(5),
+          nothingFor(DO_NOTHING_FOR_DURATION_SECONDS),
           atOnceUsers(LOAD_USER_COUNT)
       );
 
   public static final PopulationBuilder rampUpUsers =
       WebScenario.defaultLoadTest.injectOpen(
-          nothingFor(5),
+          nothingFor(DO_NOTHING_FOR_DURATION_SECONDS),
           rampUsers(LOAD_USER_COUNT).during(LOAD_RAMP_DURATION_SECONDS)
       );
 
   public static final PopulationBuilder complexInjection =
       WebScenario.defaultLoadTest.injectOpen(
-          nothingFor(5),
-          constantUsersPerSec(10).during(20).randomized(),
-          rampUsersPerSec(10).to(20).during(30).randomized()
+          nothingFor(DO_NOTHING_FOR_DURATION_SECONDS),
+          constantUsersPerSec(LOAD_FROM_USER_COUNT).during(LOAD_RAMP_DURATION_SECONDS).randomized(),
+          rampUsersPerSec(LOAD_FROM_USER_COUNT).to(LOAD_USER_COUNT).during(LOAD_RAMP_DURATION_SECONDS).randomized()
       );
 
   public static final PopulationBuilder closedModelInjection =
       WebScenario.highPurchaseLoadTest.injectClosed(
-          rampConcurrentUsers(10).to(20).during(LOAD_RAMP_DURATION_SECONDS),
-          constantConcurrentUsers(20).during(60)
+          rampConcurrentUsers(LOAD_FROM_USER_COUNT).to(LOAD_USER_COUNT).during(LOAD_RAMP_DURATION_SECONDS),
+          constantConcurrentUsers(LOAD_USER_COUNT).during(LOAD_RAMP_DURATION_SECONDS)
       );
 }
